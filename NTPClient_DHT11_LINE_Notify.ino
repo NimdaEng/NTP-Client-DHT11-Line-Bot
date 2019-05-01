@@ -39,20 +39,24 @@ void loop() {
       LINE.notify("Error reading DHT!");   
       delay(60000);
       return;    
-  }else{    
-    if(timeClient.getMinutes() == 1 && timeClient.getSeconds() <= 2){
-      LINE.notify("อุณหภูมิขณะนี้ "+String(t)+" องศา"); 
-      LINE.notify("ความชื้นขณะนี้ "+String(h)+" %"); 
-    } 
-  }
+  }    
+  //ส่งข้อมูลทุก 1 ชั่วโมง
+  if(timeClient.getMinutes() == 1 && timeClient.getSeconds() <= 2){
+    LINE.notify("อุณหภูมิขณะนี้ "+String(t)+" องศา"); 
+    LINE.notify("ความชื้นขณะนี้ "+String(h)+" %"); 
+    return;   
+  } 
+  
   if(_state){
+    //ส่งข้อมูลตอนจ่ายไฟให้ ESP8266 ครั้งแรก
     LINE.notify("อุณหภูมิขณะนี้ "+String(t)+" องศา"); 
     LINE.notify("ความชื้นขณะนี้ "+String(h)+" %");  
     _state = false;
+    return;   
   } 
 
   if((int)t >= 28){
-    //LINE.notifySticker(3,240);
+    //ส้งข้อมูลถ้า อุณหภูมิ มากกว่า หรือ เท่ากับ 28 องศา
     LINE.notify("อุณหภูมิขณะนี้ "+String(t)+" องศา"); 
     LINE.notify("ความชื้นขณะนี้ "+String(h)+" %");
     delay(60000);
