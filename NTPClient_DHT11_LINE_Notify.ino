@@ -9,7 +9,7 @@
 #define SSID        "ชื่อ WiFi"
 #define PASSWORD    "รหัส WiFi"
 
-#define LINE_TOKEN "Line Token"
+#define LINE_TOKEN "Line Token" //ใส่ Line Token 
 DHT dht(DHTPIN, DHTTYPE);
 
 const long utcOffsetInSeconds = 7 * 3600;
