@@ -44,6 +44,7 @@ void loop() {
   if(timeClient.getMinutes() == 1 && timeClient.getSeconds() <= 2){
     LINE.notify("อุณหภูมิขณะนี้ "+String(t)+" องศา"); 
     LINE.notify("ความชื้นขณะนี้ "+String(h)+" %"); 
+    delay(1000);
     return;   
   } 
   
@@ -52,6 +53,7 @@ void loop() {
     LINE.notify("อุณหภูมิขณะนี้ "+String(t)+" องศา"); 
     LINE.notify("ความชื้นขณะนี้ "+String(h)+" %");  
     _state = false;
+    delay(1000);
     return;   
   } 
 
