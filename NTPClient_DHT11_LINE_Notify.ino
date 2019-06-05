@@ -7,7 +7,7 @@
 #define DHTPIN 2         //pin connect DHT
 #define DHTTYPE DHT11     //DHT11, DHT22 type of Sensor
 #define SSID        "MT_WF"
-#define PASSWORD    "##mtwf8888#"
+#define PASSWORD    "##8888#"
 
 
 boolean _state = true;
@@ -16,7 +16,7 @@ boolean _state00 = true;
 boolean _state16 = true;
 int arr[12] = {5,10,15,20,25,30,35,40,45,50,55,59};
 
-#define LINE_TOKEN "WImpkVlEK262c9TaNuQsxwBuh1FgbUEUY6WrNsreM10" //ใส่ Line Token 
+#define LINE_TOKEN "WImpkVlEK262c9TaNuQsxwBuh1FgbUEUY6WrNsr10" //ใส่ Line Token 
 DHT dht(DHTPIN, DHTTYPE);
 
 const long utcOffsetInSeconds = 7 * 3600; 
@@ -41,14 +41,14 @@ void Notify(float t, float h){
    LINE.notify("อุณหภูมิขณะนี้ "+String(t)+" องศา"); 
    delay(60);
    LINE.notify("ความชื้นขณะนี้ "+String(h)+" %");     
-   delay(60);   
+   delay(6000);   
 }
 
 void NotifyErr(float t, float h){
    LINE.notify("อุณหภูมิมีปัญหา "+String(t)+" องศา"); 
    delay(60);
    LINE.notify("ความชื้นมีปัญหา"+String(h)+" %");     
-   delay(60);   
+   delay(6000);   
 }
 
 
@@ -56,7 +56,7 @@ void loop() {
   delay(60);
   timeClient.update();
   delay(100);
-  Serial.println("Minutes "+timeClient.getMinutes());
+  //Serial.println("Minutes "+timeClient.getMinutes());
   float h = dht.readHumidity();
   float t = dht.readTemperature(); 
   delay(100); 
@@ -80,25 +80,25 @@ void loop() {
  
   
   //ส่งข้อมูลทุก 7:55 นาที
-  if(timeClient.getHours() == 7 && timeClient.getMinutes() == 55){
-    Notify(t,h);   return;       
+  if(timeClient.getHours() == 7 && timeClient.getMinutes() == 55 && timeClient.getSeconds() <= 2){
+    _state = true;   return;       
   } 
 
   //ส่งข้อมูลทุก 16:59 นาที
-  if(timeClient.getHours() == 15 && timeClient.getMinutes() == 59){
-   Notify(t,h);return;       
+  if(timeClient.getHours() == 15 && timeClient.getMinutes() == 59 && timeClient.getSeconds() <= 2){
+   _state = true;    return;       
   } 
 
   //ส่งข้อมูลทุก 00:00 นาที
-  if(timeClient.getHours() == 0 && timeClient.getMinutes() == 0){    
-    Notify(t,h);  return;       
+  if(timeClient.getHours() == 0 && timeClient.getMinutes() == 0 && timeClient.getSeconds() <= 2){    
+    _state = true;  return;       
   } 
   
   if((int)t >= 35){ //ส้งข้อมูลถ้า อุณหภูมิ มากกว่า หรือ เท่ากับ 35 องศา
     int times = timeClient.getMinutes();
     for (byte i = 0; i < 11; i = i++) {
         if(times == arr[i]){
-           Notify(t,h);   return;       
+           NotifyErr(t,h);  return;       
         } 
       }    
   }  
