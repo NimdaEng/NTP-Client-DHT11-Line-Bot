@@ -6,7 +6,7 @@
 
 #define DHTPIN 2         //pin connect DHT
 #define DHTTYPE DHT11     //DHT11, DHT22 type of Sensor
-#define SSID        "MT_WF"
+#define SSID        "WIFI"
 #define PASSWORD    "##8888#"
 
 
@@ -16,7 +16,7 @@ boolean _state00 = true;
 boolean _state16 = true;
 int arr[12] = {5,10,15,20,25,30,35,40,45,50,55,59};
 
-#define LINE_TOKEN "WImpkVlEK262c9TaNuQsxwBuh1FgbUEUY6WrNsr10" //ใส่ Line Token 
+#define LINE_TOKEN "WImpkVlEK262c9TaNuQsxwBuh1FgbUEUY6WrNsre10" //ใส่ Line Token 
 DHT dht(DHTPIN, DHTTYPE);
 
 const long utcOffsetInSeconds = 7 * 3600; 
@@ -25,13 +25,13 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, "pool.ntp.org", utcOffsetInSeconds);
 
 void setup() {
-  Serial.begin(115200); Serial.println();
-  Serial.println(LINE.getVersion());
+  //Serial.begin(115200); Serial.println();
+  //Serial.println(LINE.getVersion());
   WiFi.begin(SSID, PASSWORD);
-  Serial.printf("WiFi connecting to %s\n",  SSID);
+  //Serial.printf("WiFi connecting to %s\n",  SSID);
   while(WiFi.status() != WL_CONNECTED) { Serial.print("."); delay(400); }
-  Serial.printf("\nWiFi connected\nIP : ");
-  Serial.println(WiFi.localIP());  
+  //Serial.printf("\nWiFi connected\nIP : ");
+  //Serial.println(WiFi.localIP());  
   LINE.setToken(LINE_TOKEN);  // กำหนด Line Token
   dht.begin();
   timeClient.begin();
@@ -41,14 +41,20 @@ void Notify(float t, float h){
    LINE.notify("อุณหภูมิขณะนี้ "+String(t)+" องศา"); 
    delay(60);
    LINE.notify("ความชื้นขณะนี้ "+String(h)+" %");     
-   delay(6000);   
+   _delay(600);
 }
 
 void NotifyErr(float t, float h){
    LINE.notify("อุณหภูมิมีปัญหา "+String(t)+" องศา"); 
    delay(60);
    LINE.notify("ความชื้นมีปัญหา"+String(h)+" %");     
-   delay(6000);   
+   _delay(600);
+}
+
+void _delay(int val){
+  for (int i=0; i <= (int)val; i++){
+      delay(10);
+  }
 }
 
 
@@ -64,8 +70,8 @@ void loop() {
     int times = timeClient.getMinutes();
       for (byte i = 0; i < 11; i = i++) {
         if(times == arr[i]){
-          Serial.println("Error reading DHT!");
-          delay(60);
+          //Serial.println("Error reading DHT!");
+          //delay(60);
           LINE.notify("Error reading DHT!");  
           delay(60);  
           return;        
