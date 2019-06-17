@@ -1,4 +1,4 @@
-# NTP-Client-DHT11-Line-Bot
+# NTP-Client-DHT11-Line-Bot แบบบ้านๆ มี File Libraries ให้แล้ว
 ESP8266 ติดต่อ NPT SERVER 
 รายการอุปกรณ์
 https://th.aliexpress.com/item/ESP8266-ESP-01-ESP-01S-ESP01-DHT11/32841290999.html?spm=a2g0s.9042311.0.0.27424c4dviVmEq 
