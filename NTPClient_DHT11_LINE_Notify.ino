@@ -6,8 +6,8 @@
 
 #define DHTPIN 2         //pin connect DHT
 #define DHTTYPE DHT11     //DHT11, DHT22 type of Sensor
-#define SSID        "WIFI"
-#define PASSWORD    "##8888#"
+#define SSID        "WIFi"
+#define PASSWORD    "##mtwf8888#"
 
 
 boolean _state = true;
